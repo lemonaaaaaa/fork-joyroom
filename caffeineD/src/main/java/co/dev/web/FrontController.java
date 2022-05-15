@@ -26,10 +26,14 @@ public class FrontController extends HttpServlet {
 
 		map = new HashMap<String, Controller>();
 
-		map.put("/cafeList.do", new CafeListControl());
-		
-		// review 등록
-		map.put("/reviewInsert.do", new ReviewInsertControl());
+		// review
+		map.put("/review.do", new ReviewControl());		
+		map.put("/reviewInsert.do", new ReviewInsertControl()); // 등록
+		map.put("/reviewLike.do", new ReviewLikeControl());		// 리뷰 좋아요
+		map.put("/likeCheck.do", new LikeCheckControl());		// 리뷰 좋아요 여부 체크
+		map.put("/myReviewList.do", new MyReviewListControl());	// 내 리뷰 조회
+		map.put("/reviewSelect.do", new ReviewSelectControl()); // 수정할 리뷰 조회
+		map.put("/reviewUpdate.do", new ReviewUpdateControl()); // 내 리뷰 수
 
 
 	}
@@ -40,11 +44,9 @@ public class FrontController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 
 		String url = request.getRequestURI(); 					
-		System.out.println(url);							// /0502_WebProject/memberInsert.do
 		String context = request.getContextPath();				
-		System.out.println(context);						// /0503_WebProject
 		String path = url.substring(context.length());
-		System.out.println(path);							// /memberInsert.do
+		System.out.println(path);							
 
 		Controller controller = map.get(path);
 		controller.execute(request, response);
